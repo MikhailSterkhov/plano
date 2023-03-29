@@ -1,11 +1,3 @@
----
-
-> # PLANO FRAMEWORK
-
-> Planed, Delayed and Scheduled tasks service management
-
----
-
 ![logo](img/logo.png)
 
 ---
