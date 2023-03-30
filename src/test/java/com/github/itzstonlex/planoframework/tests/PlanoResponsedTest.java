@@ -29,8 +29,6 @@ public class PlanoResponsedTest {
 
     PlanoTask<String> task = scheduler.scheduleResponsed(plan, new GreetingResponsedTask());
     testGreetingResponse(task);
-
-    ResponsedTaskProcess<String> process = response -> response.complete("Hello world!");
   }
 
   private static void testGreetingResponse(PlanoTask<String> planoTask) {
