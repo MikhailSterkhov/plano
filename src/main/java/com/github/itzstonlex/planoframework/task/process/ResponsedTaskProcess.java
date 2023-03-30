@@ -5,5 +5,10 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ResponsedTaskProcess<V> extends TaskProcess {
 
-  void withResponse(@NotNull CompletableResponse<V> response);
+  void after(@NotNull CompletableResponse<V> response);
+
+  @Override
+  default void processAction() {
+    // override me.
+  }
 }

@@ -108,7 +108,7 @@ public interface TaskParams {
 > 1.  A task followed by a response from it:
 
 ```java
-ResponsedTaskProcess<String> process = () -> "Hello world!";
+ResponsedTaskProcess<String> process = (response) -> response.complete("Hello world!");
 PlanoTask<String> task = scheduler.scheduleResponsed(plan, process);
 
 try {

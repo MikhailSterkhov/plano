@@ -50,7 +50,7 @@ public class WrapperPlanoThreadExecutor {
         }
 
         if (process instanceof ResponsedTaskProcess) {
-          ((ResponsedTaskProcess<Object>) process).withResponse(response);
+          ((ResponsedTaskProcess<Object>) process).after(response);
 
           try {
             response.complete(response.getResponse());

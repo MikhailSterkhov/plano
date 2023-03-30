@@ -29,6 +29,8 @@ public class PlanoResponsedTest {
 
     PlanoTask<String> task = scheduler.scheduleResponsed(plan, new GreetingResponsedTask());
     testGreetingResponse(task);
+
+    ResponsedTaskProcess<String> process = response -> response.complete("Hello world!");
   }
 
   private static void testGreetingResponse(PlanoTask<String> planoTask) {
@@ -45,7 +47,7 @@ public class PlanoResponsedTest {
     private static final String HELLO_WORLD_RESPONSE = "Hello world!";
 
     @Override
-    public void withResponse(@NotNull CompletableResponse<String> response) {
+    public void after(@NotNull CompletableResponse<String> response) {
       response.complete(HELLO_WORLD_RESPONSE);
       System.out.println("complete response ok");
     }
