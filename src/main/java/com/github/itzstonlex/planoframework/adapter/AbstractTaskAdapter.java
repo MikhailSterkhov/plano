@@ -5,16 +5,16 @@ import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
 import com.github.itzstonlex.planoframework.task.process.TaskProcess;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @EqualsAndHashCode
-@RequiredArgsConstructor
+@AllArgsConstructor
 public abstract class AbstractTaskAdapter implements TaskProcess, Cancellable {
 
   @Getter
-  private final TaskPlan plan;
+  protected TaskPlan plan;
 
   @Override
   public final synchronized boolean cancel() {

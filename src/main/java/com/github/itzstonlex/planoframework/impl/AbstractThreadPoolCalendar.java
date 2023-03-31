@@ -48,8 +48,9 @@ public abstract class AbstractThreadPoolCalendar implements PlanoCalendar {
     return scheduler;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
-  public @Nullable PlanoTask<?> findScheduledTask(@NotNull TaskPlan plan) {
-    return hashmap.get(plan);
+  public @Nullable <R> PlanoTask<R> findScheduledTask(@NotNull TaskPlan plan) {
+    return ((PlanoTask<R>) hashmap.get(plan));
   }
 }

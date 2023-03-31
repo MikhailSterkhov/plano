@@ -30,5 +30,5 @@ public interface PlanoCalendar {
    * @param plan - план необходимой для поиска задачи
    */
   @Nullable
-  PlanoTask<?> findScheduledTask(@NotNull TaskPlan plan);
+  <R> PlanoTask<R> findScheduledTask(@NotNull TaskPlan plan);
 }
