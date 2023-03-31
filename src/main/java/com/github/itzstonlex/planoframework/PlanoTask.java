@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface PlanoTask<R> {
+public interface PlanoTask<R> extends Cancellable {
 
   @NotNull
   TaskPlan getPlan();
@@ -21,9 +21,11 @@ public interface PlanoTask<R> {
   @Nullable
   R awaitResponse(long timeout, @NotNull TimeUnit unit) throws PlanoNonResponseException, PlanoAwaitTimeoutException;
 
-  boolean cancel();
-
   void awaitTermination() throws PlanoAwaitTimeoutException;
 
   void awaitTermination(long timeout, @NotNull TimeUnit unit) throws PlanoAwaitTimeoutException;
+
+  void whenCompleted(@NotNull Runnable process);
+
+  void whenCompleted(@NotNull TaskProcess process);
 }

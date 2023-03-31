@@ -1,9 +1,12 @@
 package com.github.itzstonlex.planoframework.impl;
 
+import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
-import com.github.itzstonlex.planoframework.executor.WrapperPlanoThreadExecutor;
+import com.github.itzstonlex.planoframework.adapt.AbstractResponsedTaskAdapter;
+import com.github.itzstonlex.planoframework.adapt.AbstractTaskAdapter;
+import com.github.itzstonlex.planoframework.executor.wrapper.WrapperPlanoThreadExecutor;
 import com.github.itzstonlex.planoframework.param.TaskParamKey;
 import com.github.itzstonlex.planoframework.param.cache.TaskParamCache;
 import com.github.itzstonlex.planoframework.task.GeneralTaskImpl;
@@ -32,8 +35,28 @@ public class HashMapCalendarSchedulerImpl implements PlanoScheduler {
   }
 
   @Override
+  public @NotNull PlanoCalendar getCalendar() {
+    return calendarImpl;
+  }
+
+  @Override
   public @NotNull TaskPlan configurePlan(@NonNull Map<TaskParamKey<?>, Object> cache) {
-    return new TaskPlan(new TaskParamCache(cache));
+    return new TaskPlan(this, new TaskParamCache(cache));
+  }
+
+  @Override
+  public @NotNull TaskPlan configurePlan(@NonNull TaskParamCache taskParamCache) {
+    return configurePlan((Map<TaskParamKey<?>, Object>) taskParamCache);
+  }
+
+  @Override
+  public @NotNull PlanoTask<?> schedule(@NotNull AbstractTaskAdapter abstractTaskAdapter) {
+    return schedule(abstractTaskAdapter.getPlan(), abstractTaskAdapter);
+  }
+
+  @Override
+  public @NotNull <R> PlanoTask<R> scheduleResponsed(@NotNull AbstractResponsedTaskAdapter<R> abstractTaskAdapter) {
+    return scheduleResponsed(abstractTaskAdapter.getPlan(), abstractTaskAdapter);
   }
 
   @Override

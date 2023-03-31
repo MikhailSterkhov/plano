@@ -21,6 +21,9 @@ import org.jetbrains.annotations.NotNull;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TaskPlan {
 
+  @Getter
+  PlanoScheduler scheduler;
+
   TaskParamCache params;
 
   @Getter
@@ -29,6 +32,11 @@ public class TaskPlan {
 
   public final void interruptOnCancel(boolean flag) {
     params.put(TaskParams.INTERRUPT_ON_CANCEL, flag);
+  }
+
+  public final boolean isRepeatable() {
+    Long repeatDelayParameter = getParameter(TaskParams.TASK_REPEAT_DELAY);
+    return repeatDelayParameter != null && repeatDelayParameter >= 0;
   }
 
   public final <V> V getParameter(@NotNull TaskParamKey<V> key) {
@@ -45,6 +53,10 @@ public class TaskPlan {
   public final long getRepeatDelay(@NotNull TimeUnit unit) {
     TimeUnit sourceUnit = getParameter(TaskParams.TASK_TIME_UNIT);
     Long sourceDelay = getParameter(TaskParams.TASK_REPEAT_DELAY);
+
+    if (sourceDelay == null) {
+      sourceDelay = 0L;
+    }
 
     return unit.convert(sourceDelay, sourceUnit);
   }

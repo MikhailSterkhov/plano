@@ -43,11 +43,7 @@ public class TaskParamCache extends ConcurrentHashMap<TaskParamKey<?>, Object>
   }
 
   public <V> V get(TaskParamKey<V> key) {
-    V value = getOrDefault(key, key.getValue());
-    if (value != null)
-      return value;
-
-    throw new PlanoParamNotFoundException(key);
+    return getOrDefault(key, key.getValue());
   }
 
   @Override

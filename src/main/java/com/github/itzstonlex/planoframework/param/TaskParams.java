@@ -33,7 +33,7 @@ public interface TaskParams {
    * циклично выполняемых процессов запланированной
    * задачи.
    */
-  TaskParamKey<Long> TASK_REPEAT_DELAY = new TaskParamKey<>("TASK_REPEAT_DELAY", 1L);
+  TaskParamKey<Long> TASK_REPEAT_DELAY = new TaskParamKey<>("TASK_REPEAT_DELAY");
 
   /**
    * Параметр дает разрешение на цикличное выполнение

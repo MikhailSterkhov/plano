@@ -35,10 +35,8 @@ public class GeneralTaskImpl<R> implements PlanoTask<R> {
   @SuppressWarnings("unchecked")
   private R getResponseNow() throws PlanoNonResponseException {
     synchronized (lock) {
-      lock.notifyAll();
+      return ((R) wrapper.getCompleter().getResponse());
     }
-
-    return (R) wrapper.getCompleter().getResponse();
   }
 
   @Override
@@ -62,16 +60,25 @@ public class GeneralTaskImpl<R> implements PlanoTask<R> {
   }
 
   @Override
-  public boolean cancel() {
-    synchronized (lock) {
-      lock.notifyAll();
-    }
-    return wrapper.cancel(plan.getParameter(TaskParams.INTERRUPT_ON_CANCEL));
-  }
-
-  @Override
   public void awaitTermination() throws PlanoAwaitTimeoutException {
-    this.awaitTermination(plan.getParameter(TaskParams.AWAIT_TERMINATION_TIMEOUT), TimeUnit.MILLISECONDS);
+    TimeUnit unit = TimeUnit.MILLISECONDS;
+    Long terminationTimeout;
+
+    synchronized (lock) {
+
+      long delay = plan.getDelay(unit);
+      long repeatDelay = plan.getRepeatDelay(unit);
+
+      terminationTimeout = plan.getParameter(TaskParams.AWAIT_TERMINATION_TIMEOUT);
+
+      if (terminationTimeout == null)
+        terminationTimeout = (delay * 2L);
+      else if (terminationTimeout < delay || terminationTimeout < repeatDelay) {
+        terminationTimeout = Math.max(delay, repeatDelay);
+      }
+    }
+
+    awaitTermination(terminationTimeout, unit);
   }
 
   @Override
@@ -92,6 +99,27 @@ public class GeneralTaskImpl<R> implements PlanoTask<R> {
       }
     } catch (Throwable exception) {
       throw new PlanoAwaitTimeoutException(exception);
+    }
+  }
+
+  @Override
+  public void whenCompleted(@NotNull Runnable process) {
+    whenCompleted((TaskProcess) process::run);
+  }
+
+  @Override
+  public void whenCompleted(@NotNull TaskProcess process) {
+    synchronized (lock) {
+      wrapper.submitAfterTask(process);
+    }
+  }
+
+  @Override
+  public boolean cancel() {
+    synchronized (lock) {
+      boolean interruptFlag = plan.getParameter(TaskParams.INTERRUPT_ON_CANCEL);
+
+      return wrapper.cancel(interruptFlag);
     }
   }
 }

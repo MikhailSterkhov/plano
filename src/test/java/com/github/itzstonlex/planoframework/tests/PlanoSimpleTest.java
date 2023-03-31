@@ -3,6 +3,7 @@ package com.github.itzstonlex.planoframework.tests;
 import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.PlanoCalendars;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
+import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
 import com.github.itzstonlex.planoframework.param.TaskParams;
 import com.github.itzstonlex.planoframework.param.cache.TaskParamCacheBuilder;
@@ -33,8 +34,8 @@ public class PlanoSimpleTest {
 
   @Test
   public void testSchedule() {
-    scheduler.schedule(plan, new GreetingScheduledTask())
-        .awaitTermination();
+    PlanoTask<?> task = scheduler.schedule(plan, new GreetingScheduledTask());
+    task.awaitTermination();
   }
 
   private static class GreetingScheduledTask implements TaskProcess {

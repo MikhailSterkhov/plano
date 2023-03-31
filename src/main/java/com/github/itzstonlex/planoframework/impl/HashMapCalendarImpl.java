@@ -5,7 +5,7 @@ import com.github.itzstonlex.planoframework.PlanoScheduler;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
 import com.github.itzstonlex.planoframework.executor.PlanoScheduledThreadPoolExecutor;
-import com.github.itzstonlex.planoframework.executor.WrapperPlanoThreadExecutor;
+import com.github.itzstonlex.planoframework.executor.wrapper.WrapperPlanoThreadExecutor;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
