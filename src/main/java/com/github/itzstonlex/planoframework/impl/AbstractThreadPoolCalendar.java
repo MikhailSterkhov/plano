@@ -4,31 +4,30 @@ import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
-import com.github.itzstonlex.planoframework.executor.PlanoScheduledThreadPoolExecutor;
-import com.github.itzstonlex.planoframework.executor.wrapper.WrapperPlanoThreadExecutor;
-import java.util.HashMap;
+import com.github.itzstonlex.planoframework.thread.WrapperPlanoThreadExecutor;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Getter
 @EqualsAndHashCode
-@RequiredArgsConstructor
-public class HashMapCalendarImpl implements PlanoCalendar {
+public abstract class AbstractThreadPoolCalendar implements PlanoCalendar {
 
-  private final int corePoolSize;
-  private final Map<TaskPlan, PlanoTask<?>> hashmap = new HashMap<>();
-
+  private final Map<TaskPlan, PlanoTask<?>> hashmap = new ConcurrentHashMap<>();
   private PlanoScheduler scheduler;
 
-  protected PlanoScheduler createSchedulerImpl() {
-    PlanoScheduledThreadPoolExecutor poolExecutorService = new PlanoScheduledThreadPoolExecutor(corePoolSize);
-    WrapperPlanoThreadExecutor wrapperExecutor = new WrapperPlanoThreadExecutor(poolExecutorService);
+  protected abstract ScheduledExecutorService newScheduledExecutorService();
 
-    return new HashMapCalendarSchedulerImpl(wrapperExecutor, this);
+  private PlanoScheduler newSchedulerInstance() {
+    WrapperPlanoThreadExecutor wrapperExecutor = new WrapperPlanoThreadExecutor(newScheduledExecutorService());
+    return new SimpleScheduler(wrapperExecutor, this);
+  }
+
+  public void addTask(@NotNull PlanoTask<?> planoTask) {
+    hashmap.put(planoTask.getPlan(), planoTask);
   }
 
   @Override
@@ -45,13 +44,13 @@ public class HashMapCalendarImpl implements PlanoCalendar {
   @Override
   public @NotNull PlanoScheduler getScheduler() {
     if (scheduler == null) {
-      scheduler = createSchedulerImpl();
+      scheduler = newSchedulerInstance();
     }
     return scheduler;
   }
 
   @Override
-  public @Nullable PlanoTask<?> getScheduledTask(@NotNull TaskPlan plan) {
+  public @Nullable PlanoTask<?> findScheduledTask(@NotNull TaskPlan plan) {
     return hashmap.get(plan);
   }
 }

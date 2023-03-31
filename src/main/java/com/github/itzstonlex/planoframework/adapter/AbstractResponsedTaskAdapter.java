@@ -1,4 +1,4 @@
-package com.github.itzstonlex.planoframework.adapt;
+package com.github.itzstonlex.planoframework.adapter;
 
 import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.PlanoTask;
@@ -22,7 +22,7 @@ public abstract class AbstractResponsedTaskAdapter<R> extends AbstractTaskAdapte
     TaskPlan plan = getPlan();
 
     PlanoCalendar calendar = plan.getScheduler().getCalendar();
-    return ((PlanoTask<R>) calendar.getScheduledTask(plan));
+    return ((PlanoTask<R>) calendar.findScheduledTask(plan));
   }
 
   @Nullable

@@ -1,10 +1,11 @@
-package com.github.itzstonlex.planoframework.task;
+package com.github.itzstonlex.planoframework.impl;
 
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
 import com.github.itzstonlex.planoframework.exception.PlanoAwaitTimeoutException;
 import com.github.itzstonlex.planoframework.exception.PlanoNonResponseException;
 import com.github.itzstonlex.planoframework.param.TaskParams;
+import com.github.itzstonlex.planoframework.task.WrapperScheduledFuture;
 import com.github.itzstonlex.planoframework.task.process.ResponsedTaskProcess;
 import com.github.itzstonlex.planoframework.task.process.TaskProcess;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @RequiredArgsConstructor
-public class GeneralTaskImpl<R> implements PlanoTask<R> {
+public class SynchronizedTaskImpl<R> implements PlanoTask<R> {
 
   private final Object lock = new Object();
 
@@ -73,9 +74,9 @@ public class GeneralTaskImpl<R> implements PlanoTask<R> {
 
       if (terminationTimeout == null)
         terminationTimeout = (delay * 2L);
-      else if (terminationTimeout < delay || terminationTimeout < repeatDelay) {
-        terminationTimeout = Math.max(delay, repeatDelay);
-      }
+      else
+        if (terminationTimeout < delay || terminationTimeout < repeatDelay)
+          terminationTimeout = Math.max(delay, repeatDelay);
     }
 
     awaitTermination(terminationTimeout, unit);

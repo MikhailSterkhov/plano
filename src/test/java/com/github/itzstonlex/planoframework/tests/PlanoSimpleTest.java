@@ -1,7 +1,7 @@
 package com.github.itzstonlex.planoframework.tests;
 
 import com.github.itzstonlex.planoframework.PlanoCalendar;
-import com.github.itzstonlex.planoframework.PlanoCalendars;
+import com.github.itzstonlex.planoframework.factory.PlanoCalendars;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
@@ -20,7 +20,7 @@ public class PlanoSimpleTest {
 
   @Before
   public void setUp() {
-    PlanoCalendar calendar = PlanoCalendars.createSingleHashMapCalendar();
+    PlanoCalendar calendar = PlanoCalendars.createSingleThreadCalendar();
 
     scheduler = calendar.getScheduler();
 

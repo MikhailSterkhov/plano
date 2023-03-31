@@ -1,11 +1,10 @@
-package com.github.itzstonlex.planoframework.tests.adapt;
+package com.github.itzstonlex.planoframework.tests.adapter;
 
-import com.github.itzstonlex.planoframework.PlanoCalendars;
+import com.github.itzstonlex.planoframework.factory.PlanoCalendars;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
-import com.github.itzstonlex.planoframework.adapt.AbstractResponsedTaskAdapter;
-import com.github.itzstonlex.planoframework.adapt.AbstractTaskAdapter;
+import com.github.itzstonlex.planoframework.adapter.AbstractResponsedTaskAdapter;
 import com.github.itzstonlex.planoframework.exception.PlanoNonResponseException;
 import com.github.itzstonlex.planoframework.param.TaskParams;
 import com.github.itzstonlex.planoframework.param.cache.TaskParamCacheBuilder;
@@ -23,7 +22,7 @@ public class AbstractResponsedTaskAdapterTest {
 
   @Before
   public void setUp() {
-    scheduler = PlanoCalendars.createSingleHashMapCalendar().getScheduler();
+    scheduler = PlanoCalendars.createSingleThreadCalendar().getScheduler();
   }
 
   @Test

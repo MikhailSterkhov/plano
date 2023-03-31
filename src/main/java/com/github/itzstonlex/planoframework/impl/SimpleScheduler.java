@@ -4,29 +4,28 @@ import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
 import com.github.itzstonlex.planoframework.PlanoTask;
 import com.github.itzstonlex.planoframework.TaskPlan;
-import com.github.itzstonlex.planoframework.adapt.AbstractResponsedTaskAdapter;
-import com.github.itzstonlex.planoframework.adapt.AbstractTaskAdapter;
-import com.github.itzstonlex.planoframework.executor.wrapper.WrapperPlanoThreadExecutor;
+import com.github.itzstonlex.planoframework.adapter.AbstractResponsedTaskAdapter;
+import com.github.itzstonlex.planoframework.adapter.AbstractTaskAdapter;
 import com.github.itzstonlex.planoframework.param.TaskParamKey;
 import com.github.itzstonlex.planoframework.param.cache.TaskParamCache;
-import com.github.itzstonlex.planoframework.task.GeneralTaskImpl;
 import com.github.itzstonlex.planoframework.task.WrapperScheduledFuture;
 import com.github.itzstonlex.planoframework.task.process.ResponsedTaskProcess;
 import com.github.itzstonlex.planoframework.task.process.TaskProcess;
+import com.github.itzstonlex.planoframework.thread.WrapperPlanoThreadExecutor;
 import java.util.Map;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 @RequiredArgsConstructor
-public class HashMapCalendarSchedulerImpl implements PlanoScheduler {
+public class SimpleScheduler implements PlanoScheduler {
 
   private final WrapperPlanoThreadExecutor wrappedExecutor;
-  private final HashMapCalendarImpl calendarImpl;
+  private final AbstractThreadPoolCalendar abstractCalendar;
 
   protected final PlanoTask<?> schedulePlanoTask(@NotNull TaskPlan plan, @NotNull TaskProcess process) {
     WrapperScheduledFuture wrapper = wrappedExecutor.schedule(plan, process);
-    return new GeneralTaskImpl<>(plan, process, wrapper);
+    return new SynchronizedTaskImpl<>(plan, process, wrapper);
   }
 
   @Override
@@ -36,7 +35,7 @@ public class HashMapCalendarSchedulerImpl implements PlanoScheduler {
 
   @Override
   public @NotNull PlanoCalendar getCalendar() {
-    return calendarImpl;
+    return abstractCalendar;
   }
 
   @Override
@@ -67,7 +66,8 @@ public class HashMapCalendarSchedulerImpl implements PlanoScheduler {
   @Override
   public @NotNull PlanoTask<?> schedule(@NotNull TaskPlan plan, @NotNull TaskProcess process) {
     PlanoTask<?> planoTask = schedulePlanoTask(plan, process);
-    calendarImpl.getHashmap().put(plan, planoTask);
+
+    abstractCalendar.addTask(planoTask);
     return planoTask;
   }
 

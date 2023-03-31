@@ -15,17 +15,17 @@
 
 ```java
 import com.github.itzstonlex.planoframework.PlanoCalendar;
-import com.github.itzstonlex.planoframework.PlanoCalendars;
+import com.github.itzstonlex.planoframework.factory.PlanoCalendars;
 import com.github.itzstonlex.planoframework.PlanoScheduler;
 
 public class TestStart {
 
   // method for running anyone task.
   public void startTask() {
-    
+
     // create a calendar.
-    PlanoCalendar planoCalendar = PlanoCalendars.createSingleHashMapCalendar();
-    
+    PlanoCalendar planoCalendar = PlanoCalendars.createSingleThreadCalendar();
+
     // get a scheduling service
     PlanoScheduler scheduler = planoCalendar.getScheduler();
   }

@@ -1,7 +1,7 @@
 package com.github.itzstonlex.planoframework;
 
-import com.github.itzstonlex.planoframework.adapt.AbstractResponsedTaskAdapter;
-import com.github.itzstonlex.planoframework.adapt.AbstractTaskAdapter;
+import com.github.itzstonlex.planoframework.adapter.AbstractResponsedTaskAdapter;
+import com.github.itzstonlex.planoframework.adapter.AbstractTaskAdapter;
 import com.github.itzstonlex.planoframework.param.TaskParamKey;
 import com.github.itzstonlex.planoframework.param.cache.TaskParamCache;
 import com.github.itzstonlex.planoframework.task.process.ResponsedTaskProcess;

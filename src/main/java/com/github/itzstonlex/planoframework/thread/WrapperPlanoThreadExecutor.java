@@ -1,16 +1,14 @@
-package com.github.itzstonlex.planoframework.executor.wrapper;
+package com.github.itzstonlex.planoframework.thread;
 
 import com.github.itzstonlex.planoframework.TaskPlan;
-import com.github.itzstonlex.planoframework.exception.PlanoNonResponseException;
 import com.github.itzstonlex.planoframework.exception.PlanoParamNotFoundException;
-import com.github.itzstonlex.planoframework.executor.PlanoScheduledThreadPoolExecutor;
 import com.github.itzstonlex.planoframework.param.TaskParamKey;
 import com.github.itzstonlex.planoframework.param.TaskParams;
 import com.github.itzstonlex.planoframework.task.WrapperScheduledFuture;
-import com.github.itzstonlex.planoframework.task.process.ResponsedTaskProcess;
 import com.github.itzstonlex.planoframework.task.process.TaskProcess;
 import com.github.itzstonlex.planoframework.task.process.response.CompletableResponse;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredArgsConstructor
 public class WrapperPlanoThreadExecutor {
 
-  private final PlanoScheduledThreadPoolExecutor impl;
+  private final ScheduledExecutorService impl;
 
   @NotNull
   public final List<Runnable> shutdown() {

@@ -1,4 +1,4 @@
-package com.github.itzstonlex.planoframework.executor.wrapper;
+package com.github.itzstonlex.planoframework.thread;
 
 import com.github.itzstonlex.planoframework.TaskPlan;
 import com.github.itzstonlex.planoframework.exception.PlanoNonResponseException;

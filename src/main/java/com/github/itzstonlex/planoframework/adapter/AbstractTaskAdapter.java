@@ -1,4 +1,4 @@
-package com.github.itzstonlex.planoframework.adapt;
+package com.github.itzstonlex.planoframework.adapter;
 
 import com.github.itzstonlex.planoframework.Cancellable;
 import com.github.itzstonlex.planoframework.PlanoCalendar;
@@ -20,7 +20,7 @@ public abstract class AbstractTaskAdapter implements TaskProcess, Cancellable {
   public final synchronized boolean cancel() {
     PlanoCalendar calendar = plan.getScheduler().getCalendar();
 
-    PlanoTask<?> scheduledTask = calendar.getScheduledTask(plan);
+    PlanoTask<?> scheduledTask = calendar.findScheduledTask(plan);
     if (scheduledTask != null) {
       return scheduledTask.cancel();
     }
