@@ -26,10 +26,7 @@ public class SimplifiedTaskTest {
       }
     };
 
-    scheduledTask.schedule(5, TimeUnit.SECONDS);
-
-    PlanoTask<?> planoTask = scheduler.getCalendar().findScheduledTask(scheduledTask.getPlan());
-    if (planoTask != null)
-      planoTask.awaitTermination();
+    PlanoTask<?> task = scheduledTask.schedule(5, TimeUnit.SECONDS);
+    task.awaitTermination();
   }
 }

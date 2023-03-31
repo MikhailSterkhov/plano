@@ -32,7 +32,7 @@ public abstract class SimplifiedScheduledTask extends AbstractTaskAdapter {
   }
 
   @NotNull
-  public final PlanoTask<?> schedule(long delay, @NotNull TimeUnit unit) {
+  public PlanoTask<?> schedule(long delay, @NotNull TimeUnit unit) {
     return schedule(
         TaskParamCacheBuilder.create()
           .set(TaskParams.TASK_DELAY, delay)
@@ -42,7 +42,7 @@ public abstract class SimplifiedScheduledTask extends AbstractTaskAdapter {
   }
 
   @NotNull
-  public final PlanoTask<?> scheduleRepeated(long delay, long repeatPeriod, @NotNull TimeUnit unit) {
+  public PlanoTask<?> scheduleRepeated(long delay, long repeatPeriod, @NotNull TimeUnit unit) {
     return schedule(
         TaskParamCacheBuilder.create()
             .set(TaskParams.TASK_DELAY, delay)

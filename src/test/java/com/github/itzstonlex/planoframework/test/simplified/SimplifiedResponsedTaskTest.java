@@ -29,16 +29,13 @@ public class SimplifiedResponsedTaskTest {
       }
     };
 
-    scheduledTask.schedule(5, TimeUnit.SECONDS);
+    PlanoTask<String> task = scheduledTask.schedule(5, TimeUnit.SECONDS);
 
-    PlanoTask<String> planoTask = scheduler.getCalendar().findScheduledTask(scheduledTask.getPlan());
-    if (planoTask != null) {
-      try {
-        System.out.println(planoTask.awaitResponse());
-      }
-      catch (PlanoNonResponseException e) {
-        throw new RuntimeException(e);
-      }
+    try {
+      System.out.println(task.awaitResponse());
+    }
+    catch (PlanoNonResponseException e) {
+      throw new RuntimeException(e);
     }
   }
 }
