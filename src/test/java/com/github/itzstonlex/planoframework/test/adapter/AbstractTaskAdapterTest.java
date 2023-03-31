@@ -1,4 +1,4 @@
-package com.github.itzstonlex.planoframework.tests.adapter;
+package com.github.itzstonlex.planoframework.test.adapter;
 
 import com.github.itzstonlex.planoframework.factory.PlanoCalendars;
 import com.github.itzstonlex.planoframework.PlanoScheduler;

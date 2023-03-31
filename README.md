@@ -16,7 +16,6 @@
 ```java
 import com.github.itzstonlex.planoframework.PlanoCalendar;
 import com.github.itzstonlex.planoframework.factory.PlanoCalendars;
-import com.github.itzstonlex.planoframework.PlanoScheduler;
 
 public class TestStart {
 
@@ -50,6 +49,7 @@ TaskPlan plan = planoScheduler.configurePlan(TaskParamCacheBuilder.create()
 
 ```java
 import com.github.itzstonlex.planoframework.PlanoTask;
+import com.github.itzstonlex.planoframework.param.TaskParamKey;
 import java.util.concurrent.TimeUnit;
 
 public interface TaskParams {
@@ -89,7 +89,8 @@ public interface TaskParams {
    * обработки ответа из процесса запланированной задачи
    * (Работает вместе с TASK_REPEAT_DELAY)
    */
-  TaskParamKey<Boolean> TASK_REPEAT_RESPONSE_HANDLING = new TaskParamKey<>("TASK_REPEAT_RESPONSE_HANDLING", Boolean.FALSE);
+  TaskParamKey<Boolean> TASK_REPEAT_RESPONSE_HANDLING = new TaskParamKey<>("TASK_REPEAT_RESPONSE_HANDLING",
+      Boolean.FALSE);
 
   /**
    * Устанавливает максимальное время ожидания ответа
@@ -126,6 +127,13 @@ try {
 TaskProcess process = () -> System.out.println("Hello world!");
 PlanoTask<?> task = scheduler.schedule(plan, process);
 ```
+
+---
+
+> And this is not all of the possible functionalities that
+> <br>this framework implies.
+> <br>More information on usage can be found by following 
+> <br>the <a href="https://github.com/ItzStonlex/plano-framework/tree/main/src/test/java/com/github/itzstonlex/planoframework/test">direct link</a> to the internal **unit-tests**
 
 ---
 
