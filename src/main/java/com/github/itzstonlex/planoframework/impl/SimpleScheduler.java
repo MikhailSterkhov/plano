@@ -44,8 +44,8 @@ public class SimpleScheduler implements PlanoScheduler {
   }
 
   @Override
-  public @NotNull TaskPlan configurePlan(@NonNull TaskParamCache taskParamCache) {
-    return configurePlan((Map<TaskParamKey<?>, Object>) taskParamCache);
+  public @NotNull TaskPlan configurePlan(@NonNull TaskParamCache cache) {
+    return configurePlan((Map<TaskParamKey<?>, Object>) cache);
   }
 
   @Override
@@ -73,7 +73,7 @@ public class SimpleScheduler implements PlanoScheduler {
 
   @SuppressWarnings("unchecked")
   @Override
-  public @NotNull <R> PlanoTask<R> scheduleResponsed(@NotNull TaskPlan plan, @NotNull ResponsedTaskProcess<R> responseCompleter) {
-    return (PlanoTask<R>) schedule(plan, responseCompleter);
+  public @NotNull <R> PlanoTask<R> scheduleResponsed(@NotNull TaskPlan plan, @NotNull ResponsedTaskProcess<R> responsedProcess) {
+    return (PlanoTask<R>) schedule(plan, responsedProcess);
   }
 }
