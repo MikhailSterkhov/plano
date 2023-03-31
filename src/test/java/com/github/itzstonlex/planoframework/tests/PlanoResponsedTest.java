@@ -12,28 +12,36 @@ import com.github.itzstonlex.planoframework.task.process.ResponsedTaskProcess;
 import com.github.itzstonlex.planoframework.task.process.response.CompletableResponse;
 import java.util.concurrent.TimeUnit;
 import org.jetbrains.annotations.NotNull;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PlanoResponsedTest {
 
-  public static void main(String[] args) {
-    PlanoCalendar calendar = PlanoCalendars.createSingleHashMapCalendar();
-    PlanoScheduler scheduler = calendar.getScheduler();
+  private PlanoScheduler scheduler;
 
-    TaskPlan plan = scheduler.configurePlan(
+  private TaskPlan plan;
+
+  @Before
+  public void setUp() {
+    PlanoCalendar calendar = PlanoCalendars.createSingleHashMapCalendar();
+
+    scheduler = calendar.getScheduler();
+
+    plan = scheduler.configurePlan(
         TaskParamCacheBuilder.create()
             .set(TaskParams.TASK_TIME_UNIT, TimeUnit.SECONDS)
             .set(TaskParams.TASK_DELAY, 10L)
             .set(TaskParams.TASK_REPEAT_DELAY, 1L)
             .set(TaskParams.INTERRUPT_ON_CANCEL, true)
             .build());
-
-    PlanoTask<String> task = scheduler.scheduleResponsed(plan, new GreetingResponsedTask());
-    testGreetingResponse(task);
   }
 
-  private static void testGreetingResponse(PlanoTask<String> planoTask) {
+  @Test
+  public void test_scheduleResponsed() {
+    PlanoTask<String> task = scheduler.scheduleResponsed(plan, new GreetingResponsedTask());
+
     try {
-      System.out.println("Response: " + planoTask.awaitResponse());
+      System.out.println("Response: " + task.awaitResponse());
     }
     catch (PlanoNonResponseException exception) {
       exception.printStackTrace();
@@ -47,7 +55,6 @@ public class PlanoResponsedTest {
     @Override
     public void after(@NotNull CompletableResponse<String> response) {
       response.complete(HELLO_WORLD_RESPONSE);
-      System.out.println("complete response ok");
     }
 
     @Override
