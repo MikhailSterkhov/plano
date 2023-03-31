@@ -28,11 +28,11 @@ public final class WrapperScheduledFuture {
     return scheduled.cancel(mayInterruptIfRunning);
   }
 
-  public void submitAfterTask(@NotNull TaskProcess afterTaskProcess) {
+  public void pushAfter(@NotNull TaskProcess afterTaskProcess) {
     afterProcessTasksList.add(afterTaskProcess);
   }
 
-  public void fireAfterTasks() {
+  public void fireAfterProcesses() {
     afterProcessTasksList.forEach(TaskProcess::processAction);
   }
 }

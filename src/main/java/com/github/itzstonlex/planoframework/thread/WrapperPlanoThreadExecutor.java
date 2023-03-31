@@ -54,7 +54,7 @@ public class WrapperPlanoThreadExecutor {
     }
 
     WrapperScheduledFuture wrapper = new WrapperScheduledFuture(scheduledFuture, response);
-    runnableImpl.afterAction(wrapper::fireAfterTasks);
+    runnableImpl.addActionAfterTaskProcess(wrapper::fireAfterProcesses);
 
     return wrapper;
   }

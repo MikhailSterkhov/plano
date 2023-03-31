@@ -18,12 +18,12 @@ public final class TaskParamKey<V> implements Cloneable {
 
   String name;
 
-  @NonFinal
-  boolean requiredParameter;
-
   @Setter
   @NonFinal
   V value;
+
+  @NonFinal
+  boolean requiredParameter;
 
   public TaskParamKey(@NonNull String name) {
     this.name = name;

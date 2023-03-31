@@ -111,7 +111,7 @@ public class SynchronizedTaskImpl<R> implements PlanoTask<R> {
   @Override
   public void whenCompleted(@NotNull TaskProcess process) {
     synchronized (lock) {
-      wrapper.submitAfterTask(process);
+      wrapper.pushAfter(process);
     }
   }
 

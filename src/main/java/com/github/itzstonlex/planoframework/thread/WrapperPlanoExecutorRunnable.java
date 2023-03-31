@@ -21,11 +21,11 @@ final class WrapperPlanoExecutorRunnable implements Runnable {
 
   private final CompletableResponse<Object> response;
 
-  public void afterAction(@NotNull Runnable after) {
+  public void addActionAfterTaskProcess(@NotNull Runnable after) {
     afterActionProcessesList.add(after);
   }
 
-  private void fireAfterActionProcesses() {
+  private void fireActionsAfterTaskProcess() {
     afterActionProcessesList.forEach(Runnable::run);
   }
 
@@ -34,7 +34,7 @@ final class WrapperPlanoExecutorRunnable implements Runnable {
   public void run() {
     try {
       process.processAction();
-      fireAfterActionProcesses();
+      fireActionsAfterTaskProcess();
 
       boolean isResponsed = (process instanceof ResponsedTaskProcess);
       if (!isResponsed)

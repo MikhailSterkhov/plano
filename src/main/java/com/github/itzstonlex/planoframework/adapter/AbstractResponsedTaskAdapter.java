@@ -18,6 +18,7 @@ public abstract class AbstractResponsedTaskAdapter<R> extends AbstractTaskAdapte
   }
 
   @SuppressWarnings("unchecked")
+  @Nullable
   private PlanoTask<R> getCurrentTaskObj() {
     TaskPlan plan = getPlan();
 
@@ -27,12 +28,20 @@ public abstract class AbstractResponsedTaskAdapter<R> extends AbstractTaskAdapte
 
   @Nullable
   public final synchronized R awaitResponse() throws PlanoNonResponseException, PlanoAwaitTimeoutException {
-    return getCurrentTaskObj().awaitResponse();
+    PlanoTask<R> currentTask = getCurrentTaskObj();
+    if (currentTask == null)
+      throw new PlanoNonResponseException();
+
+    return currentTask.awaitResponse();
   }
 
   @Nullable
   public final synchronized R awaitResponse(long timeout, @NotNull TimeUnit unit) throws PlanoNonResponseException, PlanoAwaitTimeoutException {
-    return getCurrentTaskObj().awaitResponse(timeout, unit);
+    PlanoTask<R> currentTask = getCurrentTaskObj();
+    if (currentTask == null)
+      throw new PlanoNonResponseException();
+
+    return currentTask.awaitResponse(timeout, unit);
   }
 
 }

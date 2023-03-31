@@ -1,12 +1,14 @@
 package com.github.itzstonlex.planoframework.exception;
 
-public class PlanoNonResponseException extends Exception {
+import org.jetbrains.annotations.NotNull;
 
-  public PlanoNonResponseException(Throwable ex) {
-    super(ex);
-  }
+public class PlanoNonResponseException extends Exception {
 
   public PlanoNonResponseException() {
     super();
+  }
+
+  public PlanoNonResponseException(@NotNull Throwable ex) {
+    super(ex);
   }
 }
