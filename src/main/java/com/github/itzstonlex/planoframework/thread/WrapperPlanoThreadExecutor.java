@@ -48,7 +48,13 @@ public class WrapperPlanoThreadExecutor {
 
     if (plan.isRepeatable()) {
       long repeatDelay = getValidatedParameterValue(plan, TaskParams.TASK_REPEAT_DELAY);
-      scheduledFuture = (ScheduledFuture<Object>) impl.scheduleAtFixedRate(runnableImpl, delay, repeatDelay, unit);
+      boolean repeatWaitProcessEnd = getValidatedParameterValue(plan, TaskParams.TASK_REPEAT_WAIT_PROCESS_END);
+
+      if (repeatWaitProcessEnd) {
+        scheduledFuture = (ScheduledFuture<Object>) impl.scheduleWithFixedDelay(runnableImpl, delay, repeatDelay, unit);
+      } else {
+        scheduledFuture = (ScheduledFuture<Object>) impl.scheduleAtFixedRate(runnableImpl, delay, repeatDelay, unit);
+      }
     } else {
       scheduledFuture = (ScheduledFuture<Object>) impl.schedule(runnableImpl, delay, unit);
     }

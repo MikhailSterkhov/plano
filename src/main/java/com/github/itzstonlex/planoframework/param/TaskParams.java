@@ -36,6 +36,16 @@ public interface TaskParams {
   TaskParamKey<Long> TASK_REPEAT_DELAY = new TaskParamKey<>("TASK_REPEAT_DELAY");
 
   /**
+   * Данный параметр дает возможность запланированной задаче,
+   * выполняющейся циклично, дождаться полной обработки ее процесса,
+   * и только потом начать отсчет для выполнения следующего цикла.
+   * </p>
+   * Таким образом сохраняется гарантия выполненного процесса
+   * до начала следующего его цикла.
+   */
+  TaskParamKey<Boolean> TASK_REPEAT_WAIT_PROCESS_END = new TaskParamKey<>("TASK_REPEAT_WAIT_PROCESS_END", Boolean.FALSE);
+
+  /**
    * Параметр дает разрешение на цикличное выполнение
    * обработки ответа из процесса запланированной задачи
    * (Работает вместе с TASK_REPEAT_DELAY)
